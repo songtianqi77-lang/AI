@@ -1,0 +1,63 @@
+name: Daily AI News Push
+
+on:
+  # 每天 UTC 23:00 = 北京时间 07:00
+  schedule:
+    - cron: "0 23 * * *"
+
+  # 允许手动触发（用于测试）
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (skip Feishu push)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  push-ai-news:
+    name: Fetch & Push AI News
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── 1. 检出代码 ────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. 设置 Python 环境 ────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # ── 3. 安装依赖 ────────────────────────────────────
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ── 4. 运行主脚本 ──────────────────────────────────
+      - name: Run AI news aggregator
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'gpt-4.1-mini' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          python main.py
+
+      # ── 5. 上传日志（可选，用于调试）─────────────────
+      - name: Upload result artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-news-result-${{ github.run_id }}
+          path: /tmp/ai_news_*.json
+          retention-days: 7
+          if-no-files-found: ignore
