@@ -1,0 +1,50 @@
+2026-04-10 06:59:12,484 [INFO] __main__: ============================================================
+2026-04-10 06:59:12,484 [INFO] __main__: AI 资讯聚合推送系统启动
+2026-04-10 06:59:12,484 [INFO] __main__: 当前时间（北京）: 2026-04-10 18:59:12
+2026-04-10 06:59:12,484 [INFO] __main__: ============================================================
+2026-04-10 06:59:12,484 [INFO] __main__: 
+[Step 1/3] 开始抓取各渠道资讯...
+2026-04-10 06:59:12,923 [INFO] scraper: Fetching Hacker News top stories...
+2026-04-10 06:59:29,659 [INFO] scraper: Hacker News: fetched 17 articles
+2026-04-10 06:59:31,659 [INFO] scraper: Reddit r/MachineLearning: fetched 25 articles
+2026-04-10 06:59:34,485 [INFO] scraper: Reddit r/artificial: fetched 25 articles
+2026-04-10 06:59:37,755 [INFO] scraper: Reddit r/LocalLLaMA: fetched 25 articles
+2026-04-10 06:59:40,779 [INFO] scraper: Reddit r/singularity: fetched 25 articles
+2026-04-10 06:59:41,921 [INFO] scraper: ArXiv cs.AI: fetched 334 articles
+2026-04-10 06:59:42,527 [INFO] scraper: ArXiv cs.LG: fetched 279 articles
+2026-04-10 06:59:43,140 [INFO] scraper: ArXiv cs.CL: fetched 173 articles
+2026-04-10 06:59:43,640 [INFO] scraper: Fetching OpenAI blog...
+2026-04-10 06:59:44,410 [INFO] scraper: OpenAI Blog: fetched 10 articles
+2026-04-10 06:59:44,410 [INFO] scraper: Fetching Hugging Face blog...
+2026-04-10 06:59:44,505 [INFO] scraper: HuggingFace Blog: fetched 10 articles
+2026-04-10 06:59:44,505 [INFO] scraper: Fetching 36Kr AI...
+2026-04-10 06:59:47,212 [INFO] scraper: 36Kr AI: fetched 12 articles
+2026-04-10 06:59:47,212 [INFO] scraper: Fetching 机器之心...
+2026-04-10 06:59:49,188 [INFO] scraper: 机器之心: fetched 0 articles
+2026-04-10 06:59:49,190 [INFO] scraper: Fetching 雷锋网...
+2026-04-10 06:59:53,980 [INFO] scraper: 雷锋网: fetched 6 articles
+2026-04-10 06:59:53,981 [INFO] scraper: Fetching 开源中国 AI...
+2026-04-10 06:59:58,225 [INFO] scraper: 开源中国: fetched 13 articles
+2026-04-10 06:59:58,225 [INFO] scraper: Fetching InfoQ AI...
+2026-04-10 07:00:01,054 [INFO] scraper: InfoQ: fetched 4 articles
+2026-04-10 07:00:01,054 [INFO] scraper: Fetching 少数派...
+2026-04-10 07:00:04,359 [INFO] scraper: 少数派: fetched 3 articles
+2026-04-10 07:00:04,359 [INFO] scraper: Total fetched: 176 EN, 38 ZH
+2026-04-10 07:00:04,359 [INFO] __main__: 抓取完成：英文 176 条，中文 38 条
+2026-04-10 07:00:04,359 [INFO] __main__: 
+[Step 2/3] 开始热点提取与摘要生成...
+2026-04-10 07:00:05,223 [INFO] processor: Processing 176 EN + 38 ZH articles
+2026-04-10 07:00:05,223 [INFO] processor: After dedup: 176 EN + 38 ZH
+2026-04-10 07:00:05,334 [INFO] processor: Calling LLM (gpt-4.1-mini) for article selection...
+2026-04-10 07:00:28,481 [INFO] httpx: HTTP Request: POST https://api.manus.im/api/llm-proxy/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-10 07:00:28,488 [INFO] processor: LLM returned 6 EN + 4 ZH articles
+2026-04-10 07:00:28,488 [INFO] __main__: 精选完成：英文 6 条，中文 4 条
+2026-04-10 07:00:28,489 [INFO] __main__: 精选结果已保存至 /tmp/ai_news_20260410.json
+2026-04-10 07:00:28,489 [INFO] __main__: 
+[Step 3/3] 开始推送到飞书群...
+2026-04-10 07:00:29,271 [INFO] notifier: Message sent to Feishu successfully!
+2026-04-10 07:00:29,272 [INFO] __main__: ✅ 推送成功！
+2026-04-10 07:00:29,272 [INFO] __main__: 
+============================================================
+2026-04-10 07:00:29,272 [INFO] __main__: AI 资讯聚合推送系统运行完成
+2026-04-10 07:00:29,272 [INFO] __main__: ============================================================
